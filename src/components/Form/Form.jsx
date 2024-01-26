@@ -1,8 +1,12 @@
 import { nanoid } from 'nanoid';
 import React, { useState } from 'react';
 import { ButtonSbm, FormContainer, InputStyle, LabelCont } from './Form.styled';
+import { useDispatch } from 'react-redux';
+import { addContacts } from 'store/contactsSlice';
 
-export const Form = ({ addName }) => {
+export const Form = () => {
+  const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -10,10 +14,12 @@ export const Form = ({ addName }) => {
     e.preventDefault();
     const newObject = {
       id: nanoid(),
-      name: name,
-      number: number,
+      name,
+      number,
     };
-    addName(newObject);
+
+    dispatch(addContacts(newObject));
+
     setName('');
     setNumber('');
   };
